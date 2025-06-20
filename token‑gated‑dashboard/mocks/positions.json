@@ -1,0 +1,4 @@
+[
+  { "id": "1", "symbol": "RIZE", "balance": 1234.56 },
+  { "id": "2", "symbol": "USDC", "balance": 98.75 }
+]
