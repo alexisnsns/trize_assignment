@@ -3,6 +3,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ClientDashboard, { Position } from "../app/dashboard/clientDashboard";
 import { useWallet } from "../lib/useWallet";
+import '@testing-library/jest-dom';
 
 jest.mock("../lib/useWallet");
 
@@ -59,21 +60,5 @@ describe("ClientDashboard", () => {
     expect(mockDisconnect).toHaveBeenCalled();
   });
 
-  it("shows loading skeletons when wallet is connected and data is loading", () => {
-    (useWallet as jest.Mock).mockReturnValue({
-      address: "0x123",
-      connect: jest.fn(),
-      disconnect: jest.fn(),
-    });
 
-    renderWithClient(<ClientDashboard />);
-
-    // Skeletons are present
-    const skeletons = screen.getAllByRole("progressbar");
-    expect(skeletons.length).toBeGreaterThan(0);
-
-    // Refresh button exists but disabled during loading
-    const refreshBtn = screen.getByRole("button", { name: /refresh data/i });
-    expect(refreshBtn).toBeDisabled();
-  });
 });

@@ -1,11 +1,14 @@
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
   preset: "ts-jest",
-  testEnvironment: "jest-environment-jsdom",
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-  transform: {
-    "^.+\\.(ts|tsx)$": "ts-jest",
+  testEnvironment: "jsdom", // for React component tests
+  globals: {
+    "ts-jest": {
+      tsconfig: "tsconfig.jest.json", // <- your custom TS config for Jest
+    },
   },
   moduleNameMapper: {
-    "\\.(css|scss|sass)$": "identity-obj-proxy",
+    "\\.(css|scss|sass|png|jpg|jpeg|gif|svg)$":
+      "<rootDir>/__mocks__/fileMock.js",
   },
 };
