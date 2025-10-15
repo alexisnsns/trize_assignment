@@ -12,12 +12,12 @@ import {
   Skeleton,
   Box,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 export type Position = {
   id: string;
-  token: string;
-  balance: string;
-  valueUSD?: number;
+  symbol: string;
+  balance: number;
 };
 
 async function fetchPositions() {
@@ -32,6 +32,7 @@ export default function ClientDashboard({
   initialPositions?: Position[];
 }) {
   const { address, connect } = useWallet();
+  const theme = useTheme();
 
   const { data, isLoading, isFetching, refetch } = useQuery<Position[], Error>(
     ["positions"],
@@ -98,13 +99,8 @@ export default function ClientDashboard({
             <Grid item xs={12} sm={6} md={4} lg={3} key={pos.id}>
               <Card sx={{ height: "100%" }}>
                 <CardContent>
-                  <Typography variant="subtitle2">{pos.token}</Typography>
+                  <Typography variant="subtitle2">{pos.symbol}</Typography>
                   <Typography variant="h6">{pos.balance}</Typography>
-                  {typeof pos.valueUSD === "number" ? (
-                    <Typography variant="body2">
-                      ${pos.valueUSD.toFixed(2)} USD
-                    </Typography>
-                  ) : null}
                 </CardContent>
               </Card>
             </Grid>

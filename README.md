@@ -27,3 +27,11 @@ token‑gated‑dashboard/
 ├─ package.json
 └─ tsconfig.json
 
+
+___________________
+
+
+TODO:
+- add tab placeholder
+- add skeleton loader
+- add dark mode
