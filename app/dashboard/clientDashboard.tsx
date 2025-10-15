@@ -20,7 +20,7 @@ export type Position = {
   balance: number;
   priceUSD: number;
   valueUSD: number;
-  change24h: number; 
+  change24h: number;
 };
 
 async function fetchPositions() {
@@ -80,23 +80,42 @@ export default function ClientDashboard({
           </Button>
         ) : (
           <>
-            <Typography variant="h6">
-              Connected:{" "}
-              <Typography
-                component="span"
-                sx={{ color: theme.palette.primary.main }}
-              >
-                {address}
-              </Typography>
-            </Typography>
-            <Button
-              variant="outlined"
-              color="error"
-              onClick={disconnect}
-              data-testid="disconnect-button"
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                mb: 3,
+                flexWrap: "wrap",
+                gap: 2,
+              }}
             >
-              Disconnect
-            </Button>
+              <Typography variant="h6">
+                Connected:{" "}
+                <Typography
+                  component="a"
+                  href={`https://etherscan.io/address/0xd8da6bf26964af9d7eed9e03e53415d37aa96045`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    color: theme.palette.primary.main,
+                    textDecoration: "none",
+                    "&:hover": { textDecoration: "underline" },
+                  }}
+                >
+                  {address}
+                </Typography>
+              </Typography>
+
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={disconnect}
+                data-testid="disconnect-button"
+              >
+                Disconnect
+              </Button>
+            </Box>
           </>
         )}
       </Box>
