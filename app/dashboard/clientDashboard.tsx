@@ -28,7 +28,7 @@ export type Position = {
 
 async function fetchPositions() {
   // simulate network delay
-  await new Promise((res) => setTimeout(res, 1500));
+  await new Promise((res) => setTimeout(res, 1000));
   const res = await fetch("/api/positions");
   if (!res.ok) throw new Error("Failed to fetch positions");
   return (await res.json()) as Position[];
