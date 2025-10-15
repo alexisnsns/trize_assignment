@@ -136,81 +136,87 @@ export default function ClientDashboard({
 
             {address && (
               <Tooltip title="Refresh data">
-                <IconButton
-                  onClick={() => refetch()}
-                  color="primary"
-                  disabled={isFetching}
-                  sx={{
-                    transition: "transform 0.2s ease",
-                    ...(isFetching && { transform: "rotate(180deg)" }),
-                    "&:hover": { transform: "rotate(180deg)" },
-                  }}
-                >
-                  <RefreshIcon />
-                </IconButton>
+                <span>
+                  <IconButton
+                    onClick={() => refetch()}
+                    color="primary"
+                    disabled={isFetching}
+                    sx={{
+                      transition: "transform 0.2s ease",
+                      ...(isFetching && { transform: "rotate(180deg)" }),
+                      "&:hover": { transform: "rotate(180deg)" },
+                    }}
+                  >
+                    <RefreshIcon />
+                  </IconButton>
+                </span>
               </Tooltip>
             )}
           </Box>
 
           {/* Loading Skeletons */}
           {showSkeleton && (
-            <Grid container spacing={2}>
+            <Grid
+              container
+              spacing={2}
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+                gap: 2,
+              }}
+            >
               {Array.from({ length: 4 }).map((_, i) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
-                  <Card
-                    sx={{
-                      height: "100%",
-                      borderRadius: 3,
-                      boxShadow: 2,
-                      p: 1,
-                    }}
-                  >
-                    <CardContent>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          mb: 1,
-                        }}
-                      >
-                        <Skeleton variant="text" width="40%" height={20} />
-                        <Skeleton variant="text" width="20%" height={20} />
-                      </Box>
+                <Card
+                  key={i}
+                  sx={{
+                    height: "100%",
+                    borderRadius: 3,
+                    boxShadow: 2,
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <CardContent sx={{ flexGrow: 1, p: 0 }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        mb: 2,
+                      }}
+                    >
+                      <Skeleton variant="text" width="40%" height={24} />
+                      <Skeleton variant="text" width="25%" height={24} />
+                    </Box>
 
-                      <Skeleton
-                        variant="text"
-                        width="80%"
-                        height={28}
-                        sx={{ mb: 1 }}
-                      />
-                      <Skeleton
-                        variant="text"
-                        width="50%"
-                        height={18}
-                        sx={{ mb: 1 }}
-                      />
-                      <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
-                        <Skeleton
-                          variant="rectangular"
-                          width="45%"
-                          height={16}
-                        />
-                        <Skeleton
-                          variant="rectangular"
-                          width="45%"
-                          height={16}
-                        />
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
+                    {/* Balance */}
+                    <Skeleton variant="text" width="80%" height={24} />
+
+                    {/* USD Value */}
+                    <Skeleton
+                      variant="text"
+                      width="50%"
+                      height={16}
+                      sx={{ mb: 2 }}
+                    />
+                  </CardContent>
+                </Card>
               ))}
             </Grid>
           )}
 
           {/* Data Display */}
           {!showSkeleton && hasData && (
-            <Grid container spacing={2}>
+            <Grid
+              container
+              spacing={2}
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+                gap: 2,
+              }}
+            >
               {data.map((pos) => {
                 const isPositive = pos.change24h > 0;
                 const changeColor = isPositive
@@ -220,64 +226,64 @@ export default function ClientDashboard({
                   : "text.secondary";
 
                 return (
-                  <Grid item xs={12} sm={6} md={4} lg={3} key={pos.id}>
-                    <Card
-                      sx={{
-                        height: "100%",
-                        borderRadius: 3,
-                        boxShadow: 2,
-                        transition: "transform 0.2s ease, box-shadow 0.2s ease",
-                        "&:hover": {
-                          transform: "translateY(-4px)",
-                          boxShadow: 4,
-                        },
-                      }}
-                    >
-                      <CardContent>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            mb: 1,
-                          }}
-                        >
-                          <Typography
-                            variant="subtitle2"
-                            color="text.secondary"
-                          >
-                            {pos.symbol}
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            sx={{ color: changeColor }}
-                          >
-                            {isPositive && "+"}
-                            {pos.change24h.toFixed(2)}%
-                          </Typography>
-                        </Box>
-
-                        <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                          {pos.balance.toLocaleString()} {pos.symbol}
+                  <Card
+                    key={pos.id}
+                    sx={{
+                      height: "100%",
+                      borderRadius: 3,
+                      boxShadow: 2,
+                      transition: "transform 0.2s ease, box-shadow 0.2s ease",
+                      "&:hover": {
+                        transform: "translateY(-4px)",
+                        boxShadow: 4,
+                      },
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <CardContent sx={{ flexGrow: 1, p: 0 }}>
+                      {/* Header: symbol + 24h change */}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          mb: 2,
+                        }}
+                      >
+                        <Typography variant="subtitle2" color="text.secondary">
+                          {pos.symbol}
                         </Typography>
+                        <Typography variant="body2" sx={{ color: changeColor }}>
+                          {isPositive && "+"}
+                          {pos.change24h.toFixed(2)}%
+                        </Typography>
+                      </Box>
 
-                        {typeof pos.valueUSD === "number" && (
-                          <Typography variant="body2" color="text.secondary">
-                            $
-                            {pos.valueUSD.toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2,
-                            })}
-                          </Typography>
-                        )}
-                      </CardContent>
-                    </Card>
-                  </Grid>
+                      {/* Balance */}
+                      <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                        {pos.balance.toLocaleString()} {pos.symbol}
+                      </Typography>
+
+                      {/* USD Value */}
+                      {typeof pos.valueUSD === "number" && (
+                        <Typography variant="body2" color="text.secondary">
+                          $
+                          {pos.valueUSD.toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </Typography>
+                      )}
+                    </CardContent>
+                  </Card>
                 );
               })}
             </Grid>
           )}
 
-          {/* Empty State */}
+          {/* Empty State: not used as data is mocked */}
           {!showSkeleton && !hasData && (
             <Typography sx={{ mt: 2 }}>No positions found.</Typography>
           )}
