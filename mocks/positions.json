@@ -1,4 +1,66 @@
 [
-  { "id": "1", "symbol": "RIZE", "balance": 1234.56 },
-  { "id": "2", "symbol": "USDC", "balance": 98.75 }
+  {
+    "id": "1",
+    "symbol": "RIZE",
+    "balance": 1234.56,
+    "priceUSD": 0.42,
+    "valueUSD": 518.51,
+    "change24h": 3.2
+  },
+  {
+    "id": "2",
+    "symbol": "USDC",
+    "balance": 98.75,
+    "priceUSD": 1.0,
+    "valueUSD": 98.75,
+    "change24h": 0.0
+  },
+  {
+    "id": "3",
+    "symbol": "ETH",
+    "balance": 0.8421,
+    "priceUSD": 3400.25,
+    "valueUSD": 2865.01,
+    "change24h": -1.5
+  },
+  {
+    "id": "4",
+    "symbol": "WBTC",
+    "balance": 0.0583,
+    "priceUSD": 67000.0,
+    "valueUSD": 3906.1,
+    "change24h": 2.8
+  },
+  {
+    "id": "5",
+    "symbol": "DAI",
+    "balance": 350.0,
+    "priceUSD": 1.0,
+    "valueUSD": 350.0,
+    "change24h": 0.0
+  },
+  {
+    "id": "6",
+    "symbol": "LINK",
+    "balance": 48.12,
+    "priceUSD": 18.5,
+    "valueUSD": 890.22,
+    "change24h": 5.6
+  },
+  {
+    "id": "7",
+    "symbol": "MATIC",
+    "balance": 732.45,
+    "priceUSD": 0.89,
+    "valueUSD": 651.88,
+    "change24h": -0.9
+  },
+  {
+    "id": "8",
+    "symbol": "ARB",
+    "balance": 150.67,
+    "priceUSD": 1.2,
+    "valueUSD": 180.8,
+    "change24h": 1.4
+  }
 ]

@@ -33,5 +33,3 @@ ___________________
 
 TODO:
 - add tab placeholder
-- add skeleton loader
-- add dark mode

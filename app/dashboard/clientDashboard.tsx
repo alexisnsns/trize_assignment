@@ -18,6 +18,9 @@ export type Position = {
   id: string;
   symbol: string;
   balance: number;
+  priceUSD: number;
+  valueUSD: number;
+  change24h: number; 
 };
 
 async function fetchPositions() {
@@ -139,16 +142,69 @@ export default function ClientDashboard({
           {/* Positions grid */}
           {!isLoading && data?.length ? (
             <Grid container spacing={2}>
-              {data.map((pos) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={pos.id}>
-                  <Card sx={{ height: "100%" }}>
-                    <CardContent>
-                      <Typography variant="subtitle2">{pos.symbol}</Typography>
-                      <Typography variant="h6">{pos.balance}</Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
+              {data.map((pos) => {
+                const isPositive = pos.change24h > 0;
+                const changeColor = isPositive
+                  ? "success.main"
+                  : pos.change24h < 0
+                  ? "error.main"
+                  : "text.secondary";
+
+                return (
+                  <Grid item xs={12} sm={6} md={4} lg={3} key={pos.id}>
+                    <Card
+                      sx={{
+                        height: "100%",
+                        borderRadius: 3,
+                        boxShadow: 2,
+                        transition: "transform 0.2s ease, box-shadow 0.2s ease",
+                        "&:hover": {
+                          transform: "translateY(-4px)",
+                          boxShadow: 4,
+                        },
+                      }}
+                    >
+                      <CardContent>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            mb: 1,
+                          }}
+                        >
+                          <Typography
+                            variant="subtitle2"
+                            color="text.secondary"
+                          >
+                            {pos.symbol}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            sx={{ color: changeColor }}
+                          >
+                            {isPositive && "+"}
+                            {pos.change24h.toFixed(2)}%
+                          </Typography>
+                        </Box>
+
+                        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                          {pos.balance.toLocaleString()} {pos.symbol}
+                        </Typography>
+
+                        {typeof pos.valueUSD === "number" && (
+                          <Typography variant="body2" color="text.secondary">
+                            $
+                            {pos.valueUSD.toLocaleString(undefined, {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
+                          </Typography>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                );
+              })}
             </Grid>
           ) : null}
         </>
