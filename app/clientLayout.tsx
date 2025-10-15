@@ -70,8 +70,8 @@ export default function ClientLayout({
             <Box
               sx={{
                 position: "fixed",
-                top: 16,
-                right: 16,
+                top: 32,
+                right: 200,
                 zIndex: 2000,
                 bgcolor: "background.paper",
                 borderRadius: "50%",
