@@ -34,22 +34,31 @@ export default function ClientDashboard({
   const { address, connect } = useWallet();
   const theme = useTheme();
 
+  // Only enable fetching when the wallet is connected
   const { data, isLoading, isFetching, refetch } = useQuery<Position[], Error>(
     ["positions"],
     fetchPositions,
     {
-      initialData: initialPositions,
+      enabled: !!address, // only run query if address exists
+      initialData: address ? initialPositions : undefined,
       refetchInterval: 30_000,
       refetchOnWindowFocus: true,
     }
   );
 
+  // Refresh only when wallet connects
   useEffect(() => {
-    refetch().catch(() => {});
-  }, [refetch]);
+    if (address) refetch().catch(() => {});
+  }, [address, refetch]);
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box
+      sx={{
+        p: 3,
+        color: theme.palette.text.primary,
+      }}
+    >
+      {/* Wallet connect gate */}
       {!address ? (
         <Box sx={{ display: "flex", gap: 2, alignItems: "center", mb: 3 }}>
           <Button
@@ -60,7 +69,7 @@ export default function ClientDashboard({
             Connect Wallet
           </Button>
           <Typography variant="body2">
-            Connect your web3 wallet to manage positions.
+            Connect your Web3 wallet to view your positions.
           </Typography>
         </Box>
       ) : (
@@ -69,12 +78,25 @@ export default function ClientDashboard({
         </Typography>
       )}
 
+      {/* Header */}
       <Box sx={{ mb: 2, display: "flex", alignItems: "center", gap: 1 }}>
         <Typography variant="h5">Token Positions</Typography>
-        {isFetching && <Typography variant="body2">(updating...)</Typography>}
+        {isFetching && address && (
+          <Typography variant="body2" color="text.secondary">
+            (updating...)
+          </Typography>
+        )}
       </Box>
 
-      {isLoading && (
+      {/* If not connected yet */}
+      {!address && (
+        <Typography variant="body2" sx={{ mt: 2 }}>
+          Please connect your wallet to load positions.
+        </Typography>
+      )}
+
+      {/* Loading state */}
+      {address && isLoading && (
         <Grid container spacing={2}>
           {Array.from({ length: 4 }).map((_, i) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
@@ -89,11 +111,13 @@ export default function ClientDashboard({
         </Grid>
       )}
 
-      {!isLoading && data?.length === 0 && (
+      {/* No positions */}
+      {address && !isLoading && data?.length === 0 && (
         <Typography>No positions found.</Typography>
       )}
 
-      {!isLoading && data?.length ? (
+      {/* Positions grid */}
+      {address && !isLoading && data?.length ? (
         <Grid container spacing={2}>
           {data.map((pos) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={pos.id}>
