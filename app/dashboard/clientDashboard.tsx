@@ -98,7 +98,7 @@ export default function ClientDashboard({
               Connected:{" "}
               <Typography
                 component="a"
-                href={`https://etherscan.io/address/${address}`}
+                href={`https://etherscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`}
                 target="_blank"
                 rel="noopener noreferrer"
                 sx={{
