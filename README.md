@@ -33,3 +33,6 @@ ___________________
 
 TODO:
 - add tab placeholder
+- add tests
+- put on vercel
+
